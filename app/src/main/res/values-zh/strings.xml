@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">淘宝</string>
+    <string name="nav_bar_goods_title">商品</string>
+    <string name="nav_bar_me_title">我的淘宝</string>
+</resources>
