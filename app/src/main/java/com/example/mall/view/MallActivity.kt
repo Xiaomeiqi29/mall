@@ -22,7 +22,6 @@ class MallActivity : AppCompatActivity() {
 
     private fun initNavView() {
         navController = findNavController(R.id.nav_host_fragment)
-        binding.navView.itemIconTintList = null
         setupWithNavController(binding.navView, navController)
     }
 }

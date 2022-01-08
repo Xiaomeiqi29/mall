@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -29,8 +31,9 @@ android {
     kotlinOptions {
         jvmTarget = '11'
     }
-    viewBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding true
+        viewBinding true
     }
 }
 
@@ -46,4 +49,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation "androidx.navigation:navigation-fragment-ktx:2.3.5"
     implementation "androidx.navigation:navigation-ui-ktx:2.3.5"
+    implementation "com.github.bumptech.glide:glide:4.11.0"
+    annotationProcessor "com.github.bumptech.glide:compiler:4.11.0"
 }
