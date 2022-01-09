@@ -42,7 +42,6 @@ class GoodsAdapter(
         }
     }
 
-
     override fun getItemCount(): Int {
         return goods.size
     }

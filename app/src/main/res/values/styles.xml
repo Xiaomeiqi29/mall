@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="Nav.Bar.Active" parent="TextAppearance.AppCompat">
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="SwitchTheme">
+        <item name="colorControlActivated">#FFFF6633</item>
     </style>
 </resources>

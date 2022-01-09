@@ -8,6 +8,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
-    <color name="orange">#EF7740</color>
+    <color name="orange">#FFFF6633</color>
+    <color name="light_orange">#F4A442</color>
     <color name="light_gray">#7E7B78</color>
+    <color name="gray_app_bar">#F7F5F5</color>
+    <color name="gray">#4C4848</color>
+    <color name="red">#F44336</color>
 </resources>

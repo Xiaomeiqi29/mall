@@ -48,6 +48,41 @@ class GoodsFragment : Fragment(), CompoundButton.OnCheckedChangeListener {
                 "Apple/苹果手机iPhone 13远峰蓝",
                 "7999"
             ),
+            Good(
+                "4",
+                "iphone13",
+                "https://loremflickr.com/180/180?lock=1",
+                "Apple/苹果手机iPhone 13远峰蓝",
+                "7999"
+            ),
+            Good(
+                "4",
+                "iphone13",
+                "https://loremflickr.com/180/180?lock=1",
+                "Apple/苹果手机iPhone 13远峰蓝",
+                "7999"
+            ),
+            Good(
+                "4",
+                "iphone13",
+                "https://loremflickr.com/180/180?lock=1",
+                "Apple/苹果手机iPhone 13远峰蓝",
+                "7999"
+            ),
+            Good(
+                "4",
+                "iphone13",
+                "https://loremflickr.com/180/180?lock=1",
+                "Apple/苹果手机iPhone 13远峰蓝",
+                "7999"
+            ),
+            Good(
+                "4",
+                "iphone13",
+                "https://loremflickr.com/180/180?lock=1",
+                "Apple/苹果手机iPhone 13远峰蓝",
+                "7999"
+            )
         )
     }
 
