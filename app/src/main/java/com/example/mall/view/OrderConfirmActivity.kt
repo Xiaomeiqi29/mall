@@ -87,8 +87,8 @@ class OrderConfirmActivity : AppCompatActivity() {
                 binding.goodNum.clearFocus()
             }
         }
-        viewModel.orderStatus.observe(this, {
-            if (it == commodityData?.sku) {
+        viewModel.createOrderSuccess.observe(this, {
+            if (it) {
                 setResult(SUBMIT_ORDER_RESULT_CODE)
                 finish()
             }

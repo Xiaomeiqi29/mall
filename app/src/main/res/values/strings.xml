@@ -25,4 +25,5 @@
     <string name="invalid_address">Address info invalid,please input valid address</string>
     <string name="submit_order_success">Your order was created successfully!</string>
     <string name="new_function_complete">New features are being perfected… so stay tuned!</string>
+    <string name="error_hint">Something wrong, please try again later</string>
 </resources>

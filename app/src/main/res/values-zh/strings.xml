@@ -25,4 +25,5 @@
     <string name="invalid_address">地址信息不合法，请重新输入</string>
     <string name="submit_order_success">您的订单创建成功！</string>
     <string name="new_function_complete">新功能完善中…敬请期待！</string>
+    <string name="error_hint">出错了，请稍后再试</string>
 </resources>

@@ -6,10 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.mall.R
 import com.example.mall.databinding.FragmentGoodsBinding
 import com.example.mall.model.Commodity
 import com.example.mall.view.adapter.GoodsAdapter
+import com.example.mall.viewmodel.CommodityListViewModel
 
 class GoodsFragment : Fragment(), CompoundButton.OnCheckedChangeListener {
     companion object {
@@ -88,7 +92,10 @@ class GoodsFragment : Fragment(), CompoundButton.OnCheckedChangeListener {
 
     private lateinit var binding: FragmentGoodsBinding
     private val gridLayoutManager by lazy { GridLayoutManager(requireActivity(), SPAN_COUNT) }
-    private lateinit var goodsAdapter: GoodsAdapter
+    private val goodsAdapter: GoodsAdapter by lazy { GoodsAdapter(requireActivity()) }
+    private val viewModel by lazy {
+        ViewModelProvider(this).get(CommodityListViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -101,21 +108,29 @@ class GoodsFragment : Fragment(), CompoundButton.OnCheckedChangeListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
-        loadCommodities()
+        initObserver()
+        viewModel.loadCommodityList()
     }
 
     private fun initView() {
         binding.switchCount.setOnCheckedChangeListener(this)
-
         binding.goodsRecyclerview.layoutManager = gridLayoutManager
         binding.goodsRecyclerview.setHasFixedSize(true)
-        goodsAdapter = GoodsAdapter(requireActivity(), MOCK_DATA)
         binding.goodsRecyclerview.adapter = goodsAdapter
-
         changeGoodsColumn(SPAN_COUNT)
     }
 
-    private fun loadCommodities() {
+    private fun initObserver() {
+        viewModel.commodityList.observe(viewLifecycleOwner, {
+            if (it.isNotEmpty()) {
+                goodsAdapter.setData(it)
+            }
+        })
+        viewModel.showError.observe(viewLifecycleOwner, {
+            if (it) {
+                Toast.makeText(requireActivity(), R.string.error_hint, Toast.LENGTH_SHORT).show()
+            }
+        })
 
     }
 

@@ -13,12 +13,17 @@ import com.example.mall.view.GoodDetailActivity
 import com.example.mall.view.GoodsFragment
 
 class GoodsAdapter(
-    private val context: Context,
-    private val commodities: List<Commodity>
+    private val context: Context
 ) : RecyclerView.Adapter<GoodsAdapter.ViewHolder>() {
     class ViewHolder(val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root)
 
     private var viewType: Int = GoodsFragment.SPAN_COUNT
+    private var commodities = emptyList<Commodity>()
+
+    fun setData(commodityList: List<Commodity>) {
+        commodities = commodityList
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
