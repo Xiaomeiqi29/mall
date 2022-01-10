@@ -21,7 +21,6 @@ fun EditText.onTextChanged(block: (String) -> Unit) {
     })
 }
 
-
 fun Activity.observeKeyboardChange(onChange: (show: Boolean) -> Unit) {
     val rootView = this.window.decorView
     val rect = Rect()
