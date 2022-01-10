@@ -8,13 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mall.databinding.ItemGoodBinding
 import com.example.mall.databinding.ItemGoodWithTwoColumnBinding
 import com.example.mall.extension.asTo
-import com.example.mall.model.Good
+import com.example.mall.model.Commodity
 import com.example.mall.view.GoodDetailActivity
 import com.example.mall.view.GoodsFragment
 
 class GoodsAdapter(
     private val context: Context,
-    private val goods: List<Good>
+    private val commodities: List<Commodity>
 ) : RecyclerView.Adapter<GoodsAdapter.ViewHolder>() {
     class ViewHolder(val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -32,18 +32,18 @@ class GoodsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if (viewType == GoodsFragment.SPAN_COUNT) {
-            holder.binding.asTo<ItemGoodWithTwoColumnBinding>()?.model = goods[position]
+            holder.binding.asTo<ItemGoodWithTwoColumnBinding>()?.model = commodities[position]
         } else {
-            holder.binding.asTo<ItemGoodBinding>()?.model = goods[position]
+            holder.binding.asTo<ItemGoodBinding>()?.model = commodities[position]
         }
         holder.itemView.setOnClickListener {
-            val intent = GoodDetailActivity.startIntent(context, goods[position])
+            val intent = GoodDetailActivity.startIntent(context, commodities[position])
             context.startActivity(intent)
         }
     }
 
     override fun getItemCount(): Int {
-        return goods.size
+        return commodities.size
     }
 
     override fun getItemViewType(position: Int): Int {

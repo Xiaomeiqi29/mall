@@ -7,27 +7,27 @@ import android.os.Bundle
 import android.widget.Toast
 import com.example.mall.R
 import com.example.mall.databinding.ActivityGoodDetailBinding
-import com.example.mall.model.Good
+import com.example.mall.model.Commodity
 
 class GoodDetailActivity : AppCompatActivity() {
     companion object {
-        private const val GOOD_DATA = "good_data"
+        private const val COMMODITY_DATA = "commodity_data"
         private const val ORDER_REQUEST_CODE = 100
 
-        fun startIntent(context: Context, good: Good?) = Intent().apply {
+        fun startIntent(context: Context, commodity: Commodity?) = Intent().apply {
             setClass(context, GoodDetailActivity::class.java)
-            putExtra(GOOD_DATA, good)
+            putExtra(COMMODITY_DATA, commodity)
         }
     }
 
     private lateinit var binding: ActivityGoodDetailBinding
-    private val good by lazy { intent.getParcelableExtra<Good>(GOOD_DATA) }
+    private val commodity by lazy { intent.getParcelableExtra<Commodity>(COMMODITY_DATA) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGoodDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.model = good
+        binding.model = commodity
         initListener()
     }
 
@@ -37,7 +37,7 @@ class GoodDetailActivity : AppCompatActivity() {
         }
         binding.bottomBar.buyNow.setOnClickListener {
             val intent = Intent(this, OrderConfirmActivity::class.java).apply {
-                putExtra(GOOD_DATA, good)
+                putExtra(COMMODITY_DATA, commodity)
             }
             startActivityForResult(intent, ORDER_REQUEST_CODE)
         }

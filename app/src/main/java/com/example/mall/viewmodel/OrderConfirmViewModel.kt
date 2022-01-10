@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mall.model.CustomerAddress
-import com.example.mall.model.Good
+import com.example.mall.model.Commodity
 import com.example.mall.model.Order
 import com.example.mall.util.RegexUtil
 
@@ -16,8 +16,8 @@ class OrderConfirmViewModel : ViewModel() {
         private const val QUANTITY_INDEX = 1
     }
 
-    private val _good = MutableLiveData(Good())
-    private val _goodQuantity = MutableLiveData(1)
+    private val _commodity = MutableLiveData(Commodity())
+    private val _commodityQuantity = MutableLiveData(1)
     private val _addClickable = MutableLiveData(true)
     private val _reduceClickable = MutableLiveData(true)
     private val _totalPrice = MutableLiveData("")
@@ -26,8 +26,8 @@ class OrderConfirmViewModel : ViewModel() {
     val _addressName = MutableLiveData("")
     private val _orderStatus = MutableLiveData("")
 
-    val good: LiveData<Good> = _good
-    val goodQuantity: LiveData<Int> = _goodQuantity
+    val commodity: LiveData<Commodity> = _commodity
+    val commodityQuantity: LiveData<Int> = _commodityQuantity
     val addClickable: LiveData<Boolean> = _addClickable
     val reduceClickable: LiveData<Boolean> = _reduceClickable
     val totalPrice: LiveData<String> = _totalPrice
@@ -36,42 +36,42 @@ class OrderConfirmViewModel : ViewModel() {
     private val addressName: LiveData<String> = _addressName
     val orderStatus: LiveData<String> = _orderStatus
 
-    fun setData(goodData: Good?) {
-        _good.value = goodData
+    fun setData(commodityData: Commodity?) {
+        _commodity.value = commodityData
     }
 
     fun submitOrder() {
 //        mallService.submitOrder(getOrder())
-        _orderStatus.value = good.value?.sku
+        _orderStatus.value = commodity.value?.sku
     }
 
-    fun addGood() {
-        val goodQuality = goodQuantity.value ?: QUANTITY_DEFAULT
+    fun addCommodity() {
+        val goodQuality = commodityQuantity.value ?: QUANTITY_DEFAULT
         if (goodQuality < QUANTITY_MAXIMUM_LIMIT) {
-            _goodQuantity.value = goodQuality + QUANTITY_INDEX
+            _commodityQuantity.value = goodQuality + QUANTITY_INDEX
         } else {
             _addClickable.value = false
         }
-        _reduceClickable.value = (goodQuantity.value ?: QUANTITY_DEFAULT) > QUANTITY_MINIMUM_LIMIT
+        _reduceClickable.value = (commodityQuantity.value ?: QUANTITY_DEFAULT) > QUANTITY_MINIMUM_LIMIT
     }
 
-    fun reduceGood() {
-        val goodQuality = goodQuantity.value ?: QUANTITY_DEFAULT
+    fun reduceCommodity() {
+        val goodQuality = commodityQuantity.value ?: QUANTITY_DEFAULT
         if (goodQuality <= QUANTITY_MINIMUM_LIMIT) {
             _reduceClickable.value = false
         } else {
-            _goodQuantity.value = goodQuality - QUANTITY_INDEX
+            _commodityQuantity.value = goodQuality - QUANTITY_INDEX
         }
-        _addClickable.value = (goodQuantity.value ?: QUANTITY_DEFAULT) < QUANTITY_MAXIMUM_LIMIT
+        _addClickable.value = (commodityQuantity.value ?: QUANTITY_DEFAULT) < QUANTITY_MAXIMUM_LIMIT
     }
 
     fun updateGoodQuantity(quantity: Int) {
-        _goodQuantity.value = quantity
+        _commodityQuantity.value = quantity
     }
 
     fun updateTotalPrice() {
         _totalPrice.value =
-            goodQuantity.value?.times(good.value?.price?.toDouble() ?: 0.0).toString()
+            commodityQuantity.value?.times(commodity.value?.price?.toDouble() ?: 0.0).toString()
     }
 
     fun isAddressValid(): Boolean {
@@ -82,9 +82,9 @@ class OrderConfirmViewModel : ViewModel() {
 
     fun getOrder(): Order {
         return Order().apply {
-            sku = good.value?.sku
-            quantity = goodQuantity.value
-            price = good.value?.price
+            sku = commodity.value?.sku
+            quantity = commodityQuantity.value
+            price = commodity.value?.price
             total = totalPrice.value
             address = CustomerAddress(name.value, phone.value, addressName.value)
         }

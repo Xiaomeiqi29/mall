@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Good(
+data class Commodity(
     val sku: String? = null,
     val title: String? = null,
     val image: String? = null,

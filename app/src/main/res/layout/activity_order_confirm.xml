@@ -11,8 +11,8 @@
             type="com.example.mall.viewmodel.OrderConfirmViewModel" />
 
         <variable
-            name="good"
-            type="com.example.mall.model.Good" />
+            name="commodity"
+            type="com.example.mall.model.Commodity" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -176,7 +176,7 @@
                             android:layout_height="match_parent"
                             android:gravity="center"
                             android:scaleType="fitXY"
-                            bind:imageSrc="@{good.image}" />
+                            bind:imageSrc="@{commodity.image}" />
                     </androidx.cardview.widget.CardView>
 
                     <TextView
@@ -184,7 +184,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:text="@{good.description}"
+                        android:text="@{commodity.description}"
                         android:textColor="@color/gray"
                         android:textSize="13sp"
                         app:layout_constrainedWidth="true"
@@ -211,7 +211,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="@{good.price}"
+                        android:text="@{commodity.price}"
                         android:textColor="@color/gray"
                         android:textSize="15sp"
                         app:layout_constraintStart_toEndOf="@+id/rmb_symbol"
@@ -235,7 +235,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
                         android:clickable="@{vm.reduceClickable}"
-                        android:onClick="@{() -> vm.reduceGood()}"
+                        android:onClick="@{() -> vm.reduceCommodity()}"
                         android:src="@mipmap/reduce_good_button"
                         app:layout_constraintBottom_toBottomOf="@+id/good_num_title"
                         app:layout_constraintEnd_toStartOf="@+id/good_num"
@@ -253,7 +253,7 @@
                         android:maxEms="10"
                         android:maxLength="5"
                         android:minWidth="20dp"
-                        android:text="@{vm.goodQuantity.toString()}"
+                        android:text="@{vm.commodityQuantity.toString()}"
                         android:textCursorDrawable="@drawable/edit_text_cursor"
                         app:layout_constraintBottom_toBottomOf="@+id/add_good"
                         app:layout_constraintEnd_toStartOf="@+id/add_good"
@@ -264,7 +264,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:clickable="@{vm.addClickable}"
-                        android:onClick="@{() -> vm.addGood()}"
+                        android:onClick="@{() -> vm.addCommodity()}"
                         android:src="@mipmap/add_good_icon"
                         app:layout_constraintBottom_toBottomOf="@id/good_num_title"
                         app:layout_constraintEnd_toEndOf="parent"

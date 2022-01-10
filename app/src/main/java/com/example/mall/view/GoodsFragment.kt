@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mall.databinding.FragmentGoodsBinding
-import com.example.mall.model.Good
+import com.example.mall.model.Commodity
 import com.example.mall.view.adapter.GoodsAdapter
 
 class GoodsFragment : Fragment(), CompoundButton.OnCheckedChangeListener {
@@ -20,63 +20,63 @@ class GoodsFragment : Fragment(), CompoundButton.OnCheckedChangeListener {
         }
 
         private val MOCK_DATA = listOf(
-            Good(
+            Commodity(
                 "1",
                 "iPhone 12 Pro Max",
                 "https://media.router-switch.com/media/catalog/product/cache/b90fceee6a5fa7acd36a04c7b968181c/i/p/iphone-12-pro.jpg",
                 "Apple/苹果手机iPhone 12 Pro Max 手机",
                 "5999"
             ),
-            Good(
+            Commodity(
                 "2",
                 "iphone13",
                 "https://cdn.dxomark.com/wp-content/uploads/medias/post-101187/Apple-iPhone-13-Pro-featured-image-packshot-review-1-1024x691.jpg",
                 "Apple/苹果手机iPhone 13远峰蓝",
                 "7999"
             ),
-            Good(
+            Commodity(
                 "3",
                 "iphone13",
                 "https://loremflickr.com/cache/resized/5315_5844241027_9cb9f6ed24_n_180_180_nofilter.jpg",
                 "Apple/苹果手机iPhone 13远峰蓝",
                 "7999"
             ),
-            Good(
+            Commodity(
                 "4",
                 "iphone13",
                 "https://loremflickr.com/180/180?lock=1",
                 "Apple/苹果手机iPhone 13远峰蓝",
                 "7999"
             ),
-            Good(
+            Commodity(
                 "4",
                 "iphone13",
                 "https://loremflickr.com/180/180?lock=1",
                 "Apple/苹果手机iPhone 13远峰蓝",
                 "7999"
             ),
-            Good(
+            Commodity(
                 "4",
                 "iphone13",
                 "https://loremflickr.com/180/180?lock=1",
                 "Apple/苹果手机iPhone 13远峰蓝",
                 "7999"
             ),
-            Good(
+            Commodity(
                 "4",
                 "iphone13",
                 "https://loremflickr.com/180/180?lock=1",
                 "Apple/苹果手机iPhone 13远峰蓝",
                 "7999"
             ),
-            Good(
+            Commodity(
                 "4",
                 "iphone13",
                 "https://loremflickr.com/180/180?lock=1",
                 "Apple/苹果手机iPhone 13远峰蓝",
                 "7999"
             ),
-            Good(
+            Commodity(
                 "4",
                 "iphone13",
                 "https://loremflickr.com/180/180?lock=1",
@@ -101,7 +101,7 @@ class GoodsFragment : Fragment(), CompoundButton.OnCheckedChangeListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
-        loadGoods()
+        loadCommodities()
     }
 
     private fun initView() {
@@ -115,7 +115,7 @@ class GoodsFragment : Fragment(), CompoundButton.OnCheckedChangeListener {
         changeGoodsColumn(SPAN_COUNT)
     }
 
-    private fun loadGoods() {
+    private fun loadCommodities() {
 
     }
 

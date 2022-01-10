@@ -8,7 +8,7 @@
 
         <variable
             name="model"
-            type="com.example.mall.model.Good" />
+            type="com.example.mall.model.Commodity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

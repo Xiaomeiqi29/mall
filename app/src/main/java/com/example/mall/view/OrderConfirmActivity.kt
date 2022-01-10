@@ -1,7 +1,5 @@
 package com.example.mall.view
 
-import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -11,15 +9,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.example.mall.R
 import com.example.mall.databinding.ActivityOrderConfirmBinding
-import com.example.mall.model.Good
+import com.example.mall.model.Commodity
 import com.example.mall.util.RegexUtil
 import com.example.mall.util.observeKeyboardChange
-import com.example.mall.util.onTextChanged
 import com.example.mall.viewmodel.OrderConfirmViewModel
+import com.example.mall.util.onTextChanged
 
 class OrderConfirmActivity : AppCompatActivity() {
     companion object {
-        private const val GOOD_DATA = "good_data"
+        private const val COMMODITY_DATA = "commodity_data"
         private const val QUANTITY_DEFAULT = 0
         private const val QUANTITY_MAXIMUM_LIMIT = 10
         private const val QUANTITY_MINIMUM_LIMIT = 1
@@ -27,7 +25,7 @@ class OrderConfirmActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityOrderConfirmBinding
-    private val goodData by lazy { intent.getParcelableExtra<Good>(GOOD_DATA) }
+    private val commodityData by lazy { intent.getParcelableExtra<Commodity>(COMMODITY_DATA) }
     private val viewModel by lazy {
         ViewModelProvider(this).get(OrderConfirmViewModel::class.java)
     }
@@ -36,11 +34,11 @@ class OrderConfirmActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityOrderConfirmBinding.inflate(layoutInflater).apply {
             vm = viewModel
-            good = goodData
+            commodity = commodityData
             lifecycleOwner = this@OrderConfirmActivity
         }
         setContentView(binding.root)
-        viewModel.setData(goodData)
+        viewModel.setData(commodityData)
         initListener()
         initObserver()
     }
@@ -66,7 +64,7 @@ class OrderConfirmActivity : AppCompatActivity() {
     }
 
     private fun initObserver() {
-        viewModel.goodQuantity.observe(this, {
+        viewModel.commodityQuantity.observe(this, {
             binding.totalNum.text =
                 getString(R.string.total_num, it.toString())
             viewModel.updateTotalPrice()
@@ -90,7 +88,7 @@ class OrderConfirmActivity : AppCompatActivity() {
             }
         }
         viewModel.orderStatus.observe(this, {
-            if (it == goodData?.sku) {
+            if (it == commodityData?.sku) {
                 setResult(SUBMIT_ORDER_RESULT_CODE)
                 finish()
             }
