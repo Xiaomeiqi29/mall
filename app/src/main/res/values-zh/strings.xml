@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">淘宝</string>
-    <string name="nav_bar_goods_title">商品</string>
+    <string name="nav_bar_commodity_title">商品</string>
     <string name="nav_bar_me_title">我的淘宝</string>
     <string name="rmb_symbol">¥</string>
     <string name="shop">店铺</string>
@@ -8,14 +8,14 @@
     <string name="collect">收藏</string>
     <string name="add_to_cart">加入购物车</string>
     <string name="buy_now">立即购买</string>
-    <string name="good_detail">商品详情</string>
-    <string name="all_goods">全部商品</string>
+    <string name="commodity_detail">商品详情</string>
+    <string name="all_commodity">全部商品</string>
     <string name="order_confirm">确认订单</string>
     <string name="order_submit">提交订单</string>
-    <string name="good_num">购买数量</string>
+    <string name="commodity_num">购买数量</string>
     <string name="total_title">合计:</string>
     <string name="total_num">共%s件，</string>
-    <string name="good_num_limit_hint">超出购买上限</string>
+    <string name="commodity_num_limit_hint">超出购买上限</string>
     <string name="error_hint_required">必填</string>
     <string name="error_hint_invalid_text">只支持中文、数字、字母和空格</string>
     <string name="error_hint_invalid_phone">请输入合法手机号</string>

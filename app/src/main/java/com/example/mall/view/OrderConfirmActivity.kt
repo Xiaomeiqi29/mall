@@ -48,10 +48,10 @@ class OrderConfirmActivity : AppCompatActivity() {
             this.onBackPressed()
         }
         binding.name.onTextChanged {
-            checkInputText(it, binding.invalidNameHint, viewModel._name)
+            checkInputText(it, binding.invalidNameHint, viewModel.name)
         }
         binding.address.onTextChanged {
-            checkInputText(it, binding.invalidAddressHint, viewModel._addressName)
+            checkInputText(it, binding.invalidAddressHint, viewModel.addressName)
         }
         checkPhoneNumber()
         binding.buyNow.setOnClickListener {
@@ -71,11 +71,11 @@ class OrderConfirmActivity : AppCompatActivity() {
         })
         this.observeKeyboardChange { show ->
             if (!show) {
-                val quantity = binding.goodNum.text.toString()
-                val goodQuantity = when {
+                val quantity = binding.commodityNum.text.toString()
+                val commodityQuantity = when {
                     quantity.isEmpty() || quantity.toInt() == QUANTITY_DEFAULT -> QUANTITY_MINIMUM_LIMIT
                     quantity.toInt() > QUANTITY_MAXIMUM_LIMIT -> {
-                        Toast.makeText(this, R.string.good_num_limit_hint, Toast.LENGTH_SHORT)
+                        Toast.makeText(this, R.string.commodity_num_limit_hint, Toast.LENGTH_SHORT)
                             .show()
                         QUANTITY_MAXIMUM_LIMIT
                     }
@@ -83,14 +83,19 @@ class OrderConfirmActivity : AppCompatActivity() {
                         quantity.toInt()
                     }
                 }
-                viewModel.updateGoodQuantity(goodQuantity)
-                binding.goodNum.clearFocus()
+                viewModel.updateCommodityQuantity(commodityQuantity)
+                binding.commodityNum.clearFocus()
             }
         }
         viewModel.createOrderSuccess.observe(this, {
             if (it) {
                 setResult(SUBMIT_ORDER_RESULT_CODE)
                 finish()
+            }
+        })
+        viewModel.showError.observe(this, {
+            if (it) {
+                Toast.makeText(this, R.string.error_hint, Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -121,7 +126,7 @@ class OrderConfirmActivity : AppCompatActivity() {
                 showErrorHintView(binding.invalidPhoneHint, getString(R.string.error_hint_required))
             } else {
                 binding.invalidPhoneHint.visibility = View.GONE
-                viewModel._phone.value = it
+                viewModel.phone.value = it
             }
         }
         val onFocusChangeListener = binding.phone.onFocusChangeListener

@@ -8,12 +8,6 @@ import android.view.ViewGroup
 import com.example.mall.databinding.FragmentMyProfileBinding
 
 class MyProfileFragment : Fragment() {
-    companion object {
-        fun newInstance(): MyProfileFragment {
-            return MyProfileFragment()
-        }
-    }
-
     private lateinit var binding: FragmentMyProfileBinding
 
     override fun onCreateView(

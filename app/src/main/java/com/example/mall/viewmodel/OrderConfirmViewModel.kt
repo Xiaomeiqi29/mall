@@ -27,20 +27,19 @@ class OrderConfirmViewModel : ViewModel() {
     private val _addClickable = MutableLiveData(true)
     private val _reduceClickable = MutableLiveData(true)
     private val _totalPrice = MutableLiveData("")
-    val _name = MutableLiveData("")
-    val _phone = MutableLiveData("")
-    val _addressName = MutableLiveData("")
     private val _createOrderSuccess = MutableLiveData(false)
+    private val _showError = MutableLiveData(false)
+    val name = MutableLiveData("")
+    val phone = MutableLiveData("")
+    val addressName = MutableLiveData("")
 
     val commodity: LiveData<Commodity> = _commodity
     val commodityQuantity: LiveData<Int> = _commodityQuantity
     val addClickable: LiveData<Boolean> = _addClickable
     val reduceClickable: LiveData<Boolean> = _reduceClickable
     val totalPrice: LiveData<String> = _totalPrice
-    val name: LiveData<String> = _name
-    private val phone: LiveData<String> = _phone
-    private val addressName: LiveData<String> = _addressName
     val createOrderSuccess: LiveData<Boolean> = _createOrderSuccess
+    val showError: LiveData<Boolean> = _showError
 
     fun setData(commodityData: Commodity?) {
         _commodity.value = commodityData
@@ -48,17 +47,23 @@ class OrderConfirmViewModel : ViewModel() {
 
     fun submitOrder() {
         viewModelScope.launch {
-            val data = mallRepository.createOrder(getOrder())
-            if (data.isSuccess()) {
-                _createOrderSuccess.value = !data.data?.getValue("id").isNullOrEmpty()
+            try {
+                val data = mallRepository.createOrder(getOrder())
+                if (data.isSuccess()) {
+                    _createOrderSuccess.value = data.data?.isNotEmpty()
+                } else {
+                    _createOrderSuccess.value = false
+                }
+            } catch (e: Exception) {
+                _createOrderSuccess.value = false
             }
         }
     }
 
     fun addCommodity() {
-        val goodQuality = commodityQuantity.value ?: QUANTITY_DEFAULT
-        if (goodQuality < QUANTITY_MAXIMUM_LIMIT) {
-            _commodityQuantity.value = goodQuality + QUANTITY_INDEX
+        val commodityQuality = commodityQuantity.value ?: QUANTITY_DEFAULT
+        if (commodityQuality < QUANTITY_MAXIMUM_LIMIT) {
+            _commodityQuantity.value = commodityQuality + QUANTITY_INDEX
         } else {
             _addClickable.value = false
         }
@@ -67,16 +72,16 @@ class OrderConfirmViewModel : ViewModel() {
     }
 
     fun reduceCommodity() {
-        val goodQuality = commodityQuantity.value ?: QUANTITY_DEFAULT
-        if (goodQuality <= QUANTITY_MINIMUM_LIMIT) {
+        val commodityQuality = commodityQuantity.value ?: QUANTITY_DEFAULT
+        if (commodityQuality <= QUANTITY_MINIMUM_LIMIT) {
             _reduceClickable.value = false
         } else {
-            _commodityQuantity.value = goodQuality - QUANTITY_INDEX
+            _commodityQuantity.value = commodityQuality - QUANTITY_INDEX
         }
         _addClickable.value = (commodityQuantity.value ?: QUANTITY_DEFAULT) < QUANTITY_MAXIMUM_LIMIT
     }
 
-    fun updateGoodQuantity(quantity: Int) {
+    fun updateCommodityQuantity(quantity: Int) {
         _commodityQuantity.value = quantity
     }
 
@@ -91,7 +96,7 @@ class OrderConfirmViewModel : ViewModel() {
         )
     }
 
-    fun getOrder(): Order {
+    private fun getOrder(): Order {
         return Order().apply {
             sku = commodity.value?.sku
             quantity = commodityQuantity.value

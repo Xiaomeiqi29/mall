@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mall_navigation"
-    app:startDestination="@+id/navigation_goods">
+    app:startDestination="@+id/navigation_commodity">
 
     <fragment
-        android:id="@+id/navigation_goods"
-        android:name="com.example.mall.view.GoodsFragment"
-        android:label="@string/nav_bar_goods_title"
-        tools:layout="@layout/fragment_goods" />
+        android:id="@+id/navigation_commodity"
+        android:name="com.example.mall.view.CommodityListFragment"
+        android:label="@string/nav_bar_commodity_title"
+        tools:layout="@layout/fragment_commodity_list" />
 
     <fragment
         android:id="@+id/navigation_me"

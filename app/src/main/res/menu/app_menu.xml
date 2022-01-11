@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/navigation_goods"
-        android:icon="@mipmap/nav_goods_icon"
-        android:title="@string/nav_bar_goods_title" />
+        android:id="@+id/navigation_commodity"
+        android:icon="@mipmap/nav_commodity_icon"
+        android:title="@string/nav_bar_commodity_title" />
 
     <item
         android:id="@+id/navigation_me"

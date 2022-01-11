@@ -161,7 +161,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/order_address">
 
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/good_image"
+                        android:id="@+id/commodity_image"
                         android:layout_width="90dp"
                         android:layout_height="90dp"
                         android:gravity="center"
@@ -190,8 +190,8 @@
                         app:layout_constrainedWidth="true"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintStart_toEndOf="@id/good_image"
-                        app:layout_constraintTop_toTopOf="@id/good_image"
+                        app:layout_constraintStart_toEndOf="@id/commodity_image"
+                        app:layout_constraintTop_toTopOf="@id/commodity_image"
                         tools:text="iphone13" />
 
                     <TextView
@@ -219,15 +219,15 @@
                         tools:text="7999" />
 
                     <TextView
-                        android:id="@+id/good_num_title"
+                        android:id="@+id/commodity_num_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="@string/good_num"
+                        android:text="@string/commodity_num"
                         android:textColor="@color/gray"
                         android:textSize="13sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/good_image" />
+                        app:layout_constraintTop_toBottomOf="@+id/commodity_image" />
 
                     <ImageView
                         android:id="@+id/qty_reduce"
@@ -236,13 +236,13 @@
                         android:layout_marginEnd="10dp"
                         android:clickable="@{vm.reduceClickable}"
                         android:onClick="@{() -> vm.reduceCommodity()}"
-                        android:src="@mipmap/reduce_good_button"
-                        app:layout_constraintBottom_toBottomOf="@+id/good_num_title"
-                        app:layout_constraintEnd_toStartOf="@+id/good_num"
-                        app:layout_constraintTop_toTopOf="@+id/good_num_title" />
+                        android:src="@mipmap/reduce_commodity_button"
+                        app:layout_constraintBottom_toBottomOf="@+id/commodity_num_title"
+                        app:layout_constraintEnd_toStartOf="@+id/commodity_num"
+                        app:layout_constraintTop_toTopOf="@+id/commodity_num_title" />
 
                     <EditText
-                        android:id="@+id/good_num"
+                        android:id="@+id/commodity_num"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
@@ -255,20 +255,20 @@
                         android:minWidth="20dp"
                         android:text="@{vm.commodityQuantity.toString()}"
                         android:textCursorDrawable="@drawable/edit_text_cursor"
-                        app:layout_constraintBottom_toBottomOf="@+id/add_good"
-                        app:layout_constraintEnd_toStartOf="@+id/add_good"
+                        app:layout_constraintBottom_toBottomOf="@+id/add_commodity"
+                        app:layout_constraintEnd_toStartOf="@+id/add_commodity"
                         tools:text="1" />
 
                     <ImageView
-                        android:id="@+id/add_good"
+                        android:id="@+id/add_commodity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:clickable="@{vm.addClickable}"
                         android:onClick="@{() -> vm.addCommodity()}"
-                        android:src="@mipmap/add_good_icon"
-                        app:layout_constraintBottom_toBottomOf="@id/good_num_title"
+                        android:src="@mipmap/add_commodity_icon"
+                        app:layout_constraintBottom_toBottomOf="@id/commodity_num_title"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/good_num_title" />
+                        app:layout_constraintTop_toTopOf="@id/commodity_num_title" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
