@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mall.R
 import com.example.mall.databinding.FragmentCommodityListBinding
+import com.example.mall.model.PageState
 import com.example.mall.view.adapter.CommodityListAdapter
 import com.example.mall.viewmodel.CommodityListViewModel
 
@@ -22,7 +23,11 @@ class CommodityListFragment : Fragment(), CompoundButton.OnCheckedChangeListener
 
     private lateinit var binding: FragmentCommodityListBinding
     private val gridLayoutManager by lazy { GridLayoutManager(requireActivity(), SPAN_COUNT) }
-    private val commodityListAdapter: CommodityListAdapter by lazy { CommodityListAdapter(requireActivity()) }
+    private val commodityListAdapter: CommodityListAdapter by lazy {
+        CommodityListAdapter(
+            requireActivity()
+        )
+    }
     private val viewModel by lazy {
         ViewModelProvider(this).get(CommodityListViewModel::class.java)
     }
@@ -31,7 +36,10 @@ class CommodityListFragment : Fragment(), CompoundButton.OnCheckedChangeListener
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentCommodityListBinding.inflate(layoutInflater, container, false)
+        binding = FragmentCommodityListBinding.inflate(layoutInflater, container, false).apply {
+            vm = viewModel
+            lifecycleOwner = viewLifecycleOwner
+        }
         return binding.root
     }
 
@@ -51,17 +59,19 @@ class CommodityListFragment : Fragment(), CompoundButton.OnCheckedChangeListener
     }
 
     private fun initObserver() {
-        viewModel.commodityList.observe(viewLifecycleOwner, {
-            if (it.isNotEmpty()) {
-                commodityListAdapter.setData(it)
+        viewModel.pageState.observe(viewLifecycleOwner, {
+            when (it) {
+                PageState.LOADING -> {
+                }
+                PageState.SUCCESS -> {
+                    commodityListAdapter.setData(viewModel.commodityList.value.orEmpty())
+                }
+                PageState.ERROR -> {
+                    Toast.makeText(requireActivity(), R.string.error_hint, Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
         })
-        viewModel.showError.observe(viewLifecycleOwner, {
-            if (it) {
-                Toast.makeText(requireActivity(), R.string.error_hint, Toast.LENGTH_SHORT).show()
-            }
-        })
-
     }
 
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {

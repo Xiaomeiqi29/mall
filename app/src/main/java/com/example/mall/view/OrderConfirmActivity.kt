@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.mall.R
 import com.example.mall.databinding.ActivityOrderConfirmBinding
 import com.example.mall.model.Commodity
+import com.example.mall.model.PageState
 import com.example.mall.util.RegexUtil
 import com.example.mall.util.observeKeyboardChange
 import com.example.mall.viewmodel.OrderConfirmViewModel
@@ -87,37 +88,19 @@ class OrderConfirmActivity : AppCompatActivity() {
                 binding.commodityNum.clearFocus()
             }
         }
-        viewModel.createOrderSuccess.observe(this, {
-            if (it) {
-                setResult(SUBMIT_ORDER_RESULT_CODE)
-                finish()
+        viewModel.pageState.observe(this, {
+            when (it) {
+                PageState.LOADING -> {
+                }
+                PageState.SUCCESS -> {
+                    setResult(SUBMIT_ORDER_RESULT_CODE)
+                    finish()
+                }
+                PageState.ERROR -> {
+                    Toast.makeText(this, R.string.error_hint, Toast.LENGTH_SHORT).show()
+                }
             }
         })
-        viewModel.showError.observe(this, {
-            if (it) {
-                Toast.makeText(this, R.string.error_hint, Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
-    private fun checkInputText(
-        inputText: String,
-        errorHintView: TextView,
-        changedInfo: MutableLiveData<String>
-    ) {
-        if (inputText.isEmpty()) {
-            showErrorHintView(errorHintView, getString(R.string.error_hint_required))
-        } else if (!RegexUtil.isValidText(inputText)) {
-            showErrorHintView(errorHintView, getString(R.string.error_hint_invalid_text))
-        } else {
-            errorHintView.visibility = View.GONE
-            changedInfo.value = inputText
-        }
-    }
-
-    private fun showErrorHintView(errorHintView: TextView, errorHint: String) {
-        errorHintView.visibility = View.VISIBLE
-        errorHintView.text = errorHint
     }
 
     private fun checkPhoneNumber() {
@@ -139,5 +122,25 @@ class OrderConfirmActivity : AppCompatActivity() {
                 )
             }
         }
+    }
+
+    private fun checkInputText(
+        inputText: String,
+        errorHintView: TextView,
+        changedInfo: MutableLiveData<String>
+    ) {
+        if (inputText.isEmpty()) {
+            showErrorHintView(errorHintView, getString(R.string.error_hint_required))
+        } else if (!RegexUtil.isValidText(inputText)) {
+            showErrorHintView(errorHintView, getString(R.string.error_hint_invalid_text))
+        } else {
+            errorHintView.visibility = View.GONE
+            changedInfo.value = inputText
+        }
+    }
+
+    private fun showErrorHintView(errorHintView: TextView, errorHint: String) {
+        errorHintView.visibility = View.VISIBLE
+        errorHintView.text = errorHint
     }
 }

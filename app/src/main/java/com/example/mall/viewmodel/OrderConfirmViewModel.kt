@@ -4,10 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mall.model.CustomerAddress
-import com.example.mall.model.Commodity
-import com.example.mall.model.Order
-import com.example.mall.model.isSuccess
+import com.example.mall.model.*
 import com.example.mall.repository.MallRepository
 import com.example.mall.repository.MallRepositoryImpl
 import com.example.mall.util.RegexUtil
@@ -27,8 +24,7 @@ class OrderConfirmViewModel : ViewModel() {
     private val _addClickable = MutableLiveData(true)
     private val _reduceClickable = MutableLiveData(true)
     private val _totalPrice = MutableLiveData("")
-    private val _createOrderSuccess = MutableLiveData(false)
-    private val _showError = MutableLiveData(false)
+    private val _pageState = MutableLiveData<PageState>(null)
     val name = MutableLiveData("")
     val phone = MutableLiveData("")
     val addressName = MutableLiveData("")
@@ -38,24 +34,24 @@ class OrderConfirmViewModel : ViewModel() {
     val addClickable: LiveData<Boolean> = _addClickable
     val reduceClickable: LiveData<Boolean> = _reduceClickable
     val totalPrice: LiveData<String> = _totalPrice
-    val createOrderSuccess: LiveData<Boolean> = _createOrderSuccess
-    val showError: LiveData<Boolean> = _showError
+    val pageState: LiveData<PageState> = _pageState
 
     fun setData(commodityData: Commodity?) {
         _commodity.value = commodityData
     }
 
     fun submitOrder() {
+        _pageState.value = PageState.LOADING
         viewModelScope.launch {
             try {
                 val data = mallRepository.createOrder(getOrder())
-                if (data.isSuccess()) {
-                    _createOrderSuccess.value = data.data?.isNotEmpty()
+                if (data.isSuccess() && data.data?.isNotEmpty() == true) {
+                    _pageState.value = PageState.SUCCESS
                 } else {
-                    _createOrderSuccess.value = false
+                    _pageState.value = PageState.ERROR
                 }
             } catch (e: Exception) {
-                _createOrderSuccess.value = false
+                _pageState.value = PageState.ERROR
             }
         }
     }
