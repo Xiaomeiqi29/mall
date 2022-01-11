@@ -1,0 +1,26 @@
+{
+   "code":200,
+   "data":[
+      {
+         "sku":"320000198007298438",
+         "title":"iPhone 12 Pro Max",
+         "image":"https://media.router-switch.com/media/catalog/product/cache/b90fceee6a5fa7acd36a04c7b968181c/i/p/iphone-12-pro.jpg",
+         "description":"Apple/苹果手机iPhone 12 Pro Max 手机",
+         "price":"5999"
+      },
+      {
+         "sku":"430000200503027544",
+         "title":"HUAWEI nova 9",
+         "image":"https://gd1.alicdn.com/imgextra/i3/860541377/O1CN01q821h91M2i7Il5tUi_!!860541377.jpg_400x400.jpg",
+         "description":"HUAWEI nova9 搭载HarmonyOS 2 8+128GB",
+         "price":"5199"
+      },
+      {
+         "sku":"460000197102101791",
+         "title":"HUAWEI Mate 40",
+         "image":"https://img.alicdn.com/imgextra/i2/2088045547/O1CN017bbnks1qqZi2K2BYC_!!2088045547.jpg_430x430q90.jpg",
+         "description":"华为 Mate40 亮黑色 mate40E(8+128G)+碎屏险【5G】",
+         "price":"5199"
+      }
+   ]
+}
