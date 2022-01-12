@@ -16,3 +16,5 @@
 商品详情页 CommodityDetailActivity
 
 确认订单页 OrderConfirmActivity
+
+测试 MallServiceTest
