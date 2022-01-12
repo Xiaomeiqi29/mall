@@ -15,6 +15,7 @@ import com.example.mall.util.RegexUtil
 import com.example.mall.util.observeKeyboardChange
 import com.example.mall.viewmodel.OrderConfirmViewModel
 import com.example.mall.util.onTextChanged
+import java.lang.NumberFormatException
 
 class OrderConfirmActivity : AppCompatActivity() {
     companion object {
@@ -74,7 +75,7 @@ class OrderConfirmActivity : AppCompatActivity() {
             if (!show) {
                 val quantity = binding.commodityNum.text.toString()
                 val commodityQuantity = when {
-                    quantity.isEmpty() || quantity.toInt() == QUANTITY_DEFAULT -> QUANTITY_MINIMUM_LIMIT
+                    !enableToInt(quantity) || quantity.toInt() == QUANTITY_DEFAULT -> QUANTITY_MINIMUM_LIMIT
                     quantity.toInt() > QUANTITY_MAXIMUM_LIMIT -> {
                         Toast.makeText(this, R.string.commodity_num_limit_hint, Toast.LENGTH_SHORT)
                             .show()
@@ -140,5 +141,14 @@ class OrderConfirmActivity : AppCompatActivity() {
     private fun showErrorHintView(errorHintView: TextView, errorHint: String) {
         errorHintView.visibility = View.VISIBLE
         errorHintView.text = errorHint
+    }
+
+    private fun enableToInt(string: String): Boolean {
+        return try {
+            string.toInt()
+            true
+        } catch (e: NumberFormatException) {
+            false
+        }
     }
 }
