@@ -90,8 +90,6 @@ class OrderConfirmActivity : AppCompatActivity() {
         }
         viewModel.pageState.observe(this, {
             when (it) {
-                PageState.LOADING -> {
-                }
                 PageState.SUCCESS -> {
                     setResult(SUBMIT_ORDER_RESULT_CODE)
                     finish()

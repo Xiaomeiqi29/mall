@@ -61,8 +61,6 @@ class CommodityListFragment : Fragment(), CompoundButton.OnCheckedChangeListener
     private fun initObserver() {
         viewModel.pageState.observe(viewLifecycleOwner, {
             when (it) {
-                PageState.LOADING -> {
-                }
                 PageState.SUCCESS -> {
                     commodityListAdapter.setData(viewModel.commodityList.value.orEmpty())
                 }
