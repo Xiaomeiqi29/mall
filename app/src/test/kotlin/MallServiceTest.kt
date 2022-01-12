@@ -17,7 +17,7 @@ import org.junit.Test
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class BffApiServiceTest {
+class MallServiceTest {
     private var mockWebServer: MockWebServer = MockWebServer()
 
     private var mockService: MallService = Retrofit.Builder()
