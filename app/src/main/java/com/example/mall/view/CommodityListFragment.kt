@@ -18,6 +18,8 @@ import com.example.mall.viewmodel.CommodityListViewModel
 class CommodityListFragment : Fragment(), CompoundButton.OnCheckedChangeListener {
     companion object {
         private const val SINGLE_COLUMN_COUNT = 1
+        private const val TOTAL_COUNT = 3
+        private const val DEFAULT_POSITION = 0
         const val SPAN_COUNT = 2
     }
 
@@ -78,13 +80,15 @@ class CommodityListFragment : Fragment(), CompoundButton.OnCheckedChangeListener
     }
 
     private fun changeCommodityColumn(count: Int) {
-        val i = 3 - count
+        val i = TOTAL_COUNT - count
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return i
             }
         }
         commodityListAdapter.setViewType(count)
-        commodityListAdapter.notifyDataSetChanged()
+        viewModel.commodityList.value?.size?.let {
+            commodityListAdapter.notifyItemRangeChanged(DEFAULT_POSITION, it)
+        }
     }
 }

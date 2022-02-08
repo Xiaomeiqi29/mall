@@ -6,6 +6,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
 
+private const val INITIAL_HEIGHT = 0
+private const val HEIGHT_DIFF = 200
 fun EditText.onTextChanged(block: (String) -> Unit) {
     addTextChangedListener(object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -24,18 +26,18 @@ fun EditText.onTextChanged(block: (String) -> Unit) {
 fun Activity.observeKeyboardChange(onChange: (show: Boolean) -> Unit) {
     val rootView = this.window.decorView
     val rect = Rect()
-    var lastHeight = 0
+    var lastHeight = INITIAL_HEIGHT
     rootView.viewTreeObserver.addOnGlobalLayoutListener {
         rootView.getWindowVisibleDisplayFrame(rect)
         val height = rect.height()
-        if (lastHeight == 0) {
+        if (lastHeight == INITIAL_HEIGHT) {
             lastHeight = height
         } else {
             val diff = lastHeight - height
-            if (diff > 200) {
+            if (diff > HEIGHT_DIFF) {
                 onChange(true)
                 lastHeight = height
-            } else if (diff < -200) {
+            } else if (diff < -HEIGHT_DIFF) {
                 onChange(false)
                 lastHeight = height
             }
