@@ -15,14 +15,10 @@ import com.example.mall.util.RegexUtil
 import com.example.mall.util.observeKeyboardChange
 import com.example.mall.viewmodel.OrderConfirmViewModel
 import com.example.mall.util.onTextChanged
-import java.lang.NumberFormatException
 
 class OrderConfirmActivity : AppCompatActivity() {
     companion object {
         private const val COMMODITY_DATA = "commodity_data"
-        private const val QUANTITY_DEFAULT = 0
-        private const val QUANTITY_MAXIMUM_LIMIT = 10
-        private const val QUANTITY_MINIMUM_LIMIT = 1
         const val SUBMIT_ORDER_RESULT_CODE = 200
     }
 
@@ -73,19 +69,7 @@ class OrderConfirmActivity : AppCompatActivity() {
         })
         this.observeKeyboardChange { show ->
             if (!show) {
-                val quantity = binding.commodityNum.text.toString()
-                val commodityQuantity = when {
-                    !enableToInt(quantity) || quantity.toInt() == QUANTITY_DEFAULT -> QUANTITY_MINIMUM_LIMIT
-                    quantity.toInt() > QUANTITY_MAXIMUM_LIMIT -> {
-                        Toast.makeText(this, R.string.commodity_num_limit_hint, Toast.LENGTH_SHORT)
-                            .show()
-                        QUANTITY_MAXIMUM_LIMIT
-                    }
-                    else -> {
-                        quantity.toInt()
-                    }
-                }
-                viewModel.updateCommodityQuantity(commodityQuantity)
+                viewModel.updateCommodityQuantity(binding.commodityNum.text.toString())
                 binding.commodityNum.clearFocus()
             }
         }
@@ -97,6 +81,14 @@ class OrderConfirmActivity : AppCompatActivity() {
                 }
                 PageState.ERROR -> {
                     Toast.makeText(this, R.string.error_hint, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+        viewModel.action.observe(this, {
+            when (it) {
+                OrderConfirmViewModel.Action.ShowCommodityNumLimitHint -> {
+                    Toast.makeText(this, R.string.commodity_num_limit_hint, Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         })
@@ -141,14 +133,5 @@ class OrderConfirmActivity : AppCompatActivity() {
     private fun showErrorHintView(errorHintView: TextView, errorHint: String) {
         errorHintView.visibility = View.VISIBLE
         errorHintView.text = errorHint
-    }
-
-    private fun enableToInt(string: String): Boolean {
-        return try {
-            string.toInt()
-            true
-        } catch (e: NumberFormatException) {
-            false
-        }
     }
 }

@@ -9,6 +9,7 @@ import com.example.mall.repository.MallRepository
 import com.example.mall.repository.MallRepositoryImpl
 import com.example.mall.util.RegexUtil
 import kotlinx.coroutines.launch
+import java.lang.NumberFormatException
 
 class OrderConfirmViewModel : ViewModel() {
     companion object {
@@ -25,6 +26,7 @@ class OrderConfirmViewModel : ViewModel() {
     private val _reduceClickable = MutableLiveData(true)
     private val _totalPrice = MutableLiveData("")
     private val _pageState = MutableLiveData<PageState>(null)
+    private val _action = MutableLiveData<Action?>(null)
     val name = MutableLiveData("")
     val phone = MutableLiveData("")
     val addressName = MutableLiveData("")
@@ -35,6 +37,11 @@ class OrderConfirmViewModel : ViewModel() {
     val reduceClickable: LiveData<Boolean> = _reduceClickable
     val totalPrice: LiveData<String> = _totalPrice
     val pageState: LiveData<PageState> = _pageState
+    val action: LiveData<Action?> = _action
+
+    sealed class Action {
+        object ShowCommodityNumLimitHint : Action()
+    }
 
     fun setData(commodityData: Commodity?) {
         _commodity.value = commodityData
@@ -77,8 +84,18 @@ class OrderConfirmViewModel : ViewModel() {
         _addClickable.value = (commodityQuantity.value ?: QUANTITY_DEFAULT) < QUANTITY_MAXIMUM_LIMIT
     }
 
-    fun updateCommodityQuantity(quantity: Int) {
-        _commodityQuantity.value = quantity
+    fun updateCommodityQuantity(quantity: String) {
+        val commodityQuantity = when {
+            !enableToInt(quantity) || quantity.toInt() == QUANTITY_DEFAULT -> QUANTITY_MINIMUM_LIMIT
+            quantity.toInt() > QUANTITY_MAXIMUM_LIMIT -> {
+                Action.ShowCommodityNumLimitHint.postAction()
+                QUANTITY_MAXIMUM_LIMIT
+            }
+            else -> {
+                quantity.toInt()
+            }
+        }
+        _commodityQuantity.value = commodityQuantity
     }
 
     fun updateTotalPrice() {
@@ -92,6 +109,10 @@ class OrderConfirmViewModel : ViewModel() {
         )
     }
 
+    private fun Action.postAction() {
+        _action.postValue(this)
+    }
+
     private fun getOrder(): Order {
         return Order().apply {
             sku = commodity.value?.sku
@@ -99,6 +120,15 @@ class OrderConfirmViewModel : ViewModel() {
             price = commodity.value?.price
             total = totalPrice.value
             address = CustomerAddress(name.value, phone.value, addressName.value)
+        }
+    }
+
+    private fun enableToInt(string: String): Boolean {
+        return try {
+            string.toInt()
+            true
+        } catch (e: NumberFormatException) {
+            false
         }
     }
 }
